@@ -52,7 +52,16 @@ export default function CounterScreen() {
   useEffect(() => {
     const init = async () => {
       const value = await getFromStorage(countdownStorageKey);
-      setCountdownState(value);
+      if (!value) {
+        setCountdownState({
+          currentNotificationId: undefined,
+          completedAtTimestamps: [],
+        });
+      } else {
+        setCountdownState(value);
+      }
+
+      setIsLoading(false);
     };
     init();
   }, []);
